@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 // import "./App.css";
 
-class Passengers extends Component {
+class Routes extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -11,7 +11,7 @@ class Passengers extends Component {
   }
 
   componentDidMount() {
-    fetch("http://localhost:8080/api/passengers")
+    fetch("http://localhost:8080/api/routes")
       .then(response => response.json())
       .then(
         result => {
@@ -37,21 +37,23 @@ class Passengers extends Component {
     if (!this.state.isLoaded) {
       return <div>Loading...</div>;
     } else {
-      let passengers = this.state.data._embedded.passengers;
+      let routes = this.state.data._embedded.routes;
 
       return (
         <table className="table table-sm">
           <thead>
             <tr>
-              <th>First name </th>
-              <th>Last name</th>
+              <th>From</th>
+              <th>Destination</th>
+              <th>Distance</th>
             </tr>
           </thead>
           <tbody>
-            {passengers.map(pas => (
-              <tr key={pas.firstname + pas.lastname}>
-                <td>{pas.firstname}</td>
-                <td>{pas.lastname}</td>
+            {routes.map(route => (
+              <tr key={route.fromAirport + route.destinationAirport}>
+                <td>{route.fromAirport}</td>
+                <td>{route.destinationAirport}</td>
+                <td>{route.distance}</td>
               </tr>
             ))}
           </tbody>
@@ -61,4 +63,4 @@ class Passengers extends Component {
   }
 }
 
-export default Passengers;
+export default Routes;

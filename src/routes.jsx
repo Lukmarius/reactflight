@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import UniTable from "./uniTable";
+import Dashboard from "./Dashboard";
 // import "./App.css";
 
 class Routes extends Component {
@@ -51,8 +53,12 @@ class Routes extends Component {
           <tbody>
             {routes.map(route => (
               <tr key={route.fromAirport + route.destinationAirport}>
-                <td>{route.fromAirport}</td>
-                <td>{route.destinationAirport}</td>
+                <td>
+                  <Dashboard airport={{ id: route.fromAirport }} />
+                </td>
+                <td>
+                  <Dashboard airport={{ id: route.destinationAirport }} />
+                </td>
                 <td>{route.distance}</td>
               </tr>
             ))}

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import "./App.css";
-import Passengers from "./passengers";
 import Routes from "./routes";
 import UniTable from "./uniTable";
 
@@ -30,11 +29,7 @@ class App extends Component {
         </button>
         <button
           className="btn btn-sm m-2"
-          onClick={() =>
-            this.showTable(
-              <UniTable uri={"http://localhost:8080/api/routes"} />
-            )
-          }
+          onClick={() => this.showTable(<Routes />)}
         >
           Show Routes
         </button>

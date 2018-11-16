@@ -1,39 +1,39 @@
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
 import "./App.css";
-import Routes from "./routes";
-import UniTable from "./uniTable";
+import Routes from "./Routes";
+import UniTable from "./UniTable";
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { table: <span>Choose table</span> };
   }
 
   showTable(comp) {
-    ReactDOM.render(comp, document.getElementById("tables"));
+    this.setState({ table: comp });
   }
 
   render() {
     return (
       <div className="tablediv">
+        <div id="mod" />
         <button
           className="btn btn-sm m-2"
           onClick={() =>
-            this.showTable(
-              <UniTable uri={"http://localhost:8080/api/passengers"} />
-            )
+            this.setState({
+              table: <UniTable uri={"http://localhost:8080/api/passengers"} />
+            })
           }
         >
           Show Passengers
         </button>
         <button
           className="btn btn-sm m-2"
-          onClick={() => this.showTable(<Routes />)}
+          onClick={() => this.setState({ table: <Routes /> })}
         >
           Show Routes
         </button>
-        <div id="tables" />
+        <div id="tables">{this.state.table}</div>
       </div>
     );
   }

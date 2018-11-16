@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-// import "./App.css";
 
 class Passengers extends Component {
   constructor(props) {
@@ -15,8 +14,6 @@ class Passengers extends Component {
       .then(response => response.json())
       .then(
         result => {
-          console.log("DATA: ");
-          console.log(result);
           this.setState({
             isLoaded: true,
             data: result
@@ -29,8 +26,7 @@ class Passengers extends Component {
             error
           });
         }
-      )
-      .then(() => console.log(this.state.data));
+      );
   }
 
   render() {

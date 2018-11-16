@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-// import "./App.css";
 
 class UniTable extends Component {
   uri = "";
@@ -17,8 +16,6 @@ class UniTable extends Component {
       .then(response => response.json())
       .then(
         result => {
-          console.log("DATA: ");
-          console.log(result);
           this.setState({
             isLoaded: true,
             data: result
@@ -27,12 +24,11 @@ class UniTable extends Component {
 
         error => {
           this.setState({
-            isLoaded: true,
+            isLoaded: false,
             error
           });
         }
-      )
-      .then(() => console.log(this.state.data));
+      );
   }
 
   checkKey(key) {
@@ -49,13 +45,24 @@ class UniTable extends Component {
 
   render() {
     if (!this.state.isLoaded) {
+      console.log("loading uniTable.....");
       return <div>Loading...</div>;
     } else {
       let endpointList = this.uri.split("/");
-      let name = endpointList[endpointList.length - 1];
-      let list = this.state.data._embedded[name];
-      console.log("LIST:");
-      console.log(list);
+      let objects;
+      let headers;
+
+      console.log("in uniTable, endpoints list: " + endpointList);
+      if (endpointList.length < 6) {
+        let name = endpointList[endpointList.length - 1];
+        objects = this.state.data._embedded[name];
+        headers = objects[0];
+        console.log("in UniTable ", objects);
+      } else {
+        objects = [this.state.data];
+        headers = objects[0];
+        console.log("in UniTable ", objects);
+      }
 
       let i = 0;
       let j = 0;
@@ -63,13 +70,13 @@ class UniTable extends Component {
         <table className="table table-sm">
           <thead>
             <tr>
-              {Object.keys(list[0]).map(key => (
+              {Object.keys(headers).map(key => (
                 <th key={i++}>{this.checkKey(key)}</th>
               ))}
             </tr>
           </thead>
           <tbody>
-            {list.map(obj => (
+            {objects.map(obj => (
               <tr key={i++}>
                 {Object.keys(obj).map(key => (
                   <td key={j++}>{this.checkValue(obj, key)}</td>

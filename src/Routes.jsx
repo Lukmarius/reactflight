@@ -8,11 +8,14 @@ class Routes extends Component {
     this.state = {
       isLoaded: false,
       data: {},
+      page: this.props.page,
+      size: this.props.size,
       modal: false,
       uriModal: ""
     };
     this.showModal = this.showModal.bind(this);
   }
+
   showModal(name) {
     this.setState({
       modal: true,
@@ -21,7 +24,11 @@ class Routes extends Component {
   }
 
   componentDidMount() {
-    fetch("http://localhost:8080/api/routes")
+    fetch(
+      `http://localhost:8080/api/routes?page=${this.state.page}&size=${
+        this.state.size
+      }`
+    )
       .then(response => response.json())
       .then(
         result => {
@@ -39,6 +46,10 @@ class Routes extends Component {
           });
         }
       );
+  }
+
+  componentDidUpdate() {
+    //change size page
   }
 
   render() {

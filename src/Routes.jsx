@@ -50,10 +50,7 @@ class Routes extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     //after changed size or page
-    if (
-      prevState.page !== this.state.page ||
-      prevState.size !== this.state.size
-    ) {
+    if (prevState.size !== this.state.size) {
       console.log("fetching in ComponentDidUpdate routes");
       this.fetching();
     }

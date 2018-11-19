@@ -1,4 +1,5 @@
 import React from "react";
+import "./size.css";
 
 const Size = props => {
   const sizes = [5, 10, 20, 50, 200];
@@ -17,7 +18,7 @@ const Size = props => {
   };
 
   return (
-    <React.Fragment>
+    <span className="sizing">
       <span> Elements:</span>
       {sizes.map(number => {
         return (
@@ -30,7 +31,7 @@ const Size = props => {
           </button>
         );
       })}
-    </React.Fragment>
+    </span>
   );
 };
 

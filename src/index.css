@@ -2,4 +2,10 @@ body {
   margin: 1%;
   padding: 1%;
   font-family: sans-serif;
+  background: linear-gradient(
+    to bottom right,
+    rgb(245, 251, 255),
+    rgb(255, 248, 205),
+    aliceblue
+  );
 }

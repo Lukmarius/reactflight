@@ -15,7 +15,7 @@ export default class ModalButton extends Component {
         <button
           type="button"
           onClick={() => this.openModal(this.name)}
-          className="btn btn-sm m-2"
+          className="btn btn-sm m-2 btn-link"
         >
           {this.name}
         </button>

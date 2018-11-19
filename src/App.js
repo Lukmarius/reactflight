@@ -17,7 +17,7 @@ class App extends Component {
       <div className="tablediv">
         <div id="mod" />
         <button
-          className="btn btn-sm m-2"
+          className="btn btn-sm m-4 btn-primary"
           onClick={() =>
             this.setState({
               table: <Passengers />
@@ -27,7 +27,7 @@ class App extends Component {
           Show Passengers
         </button>
         <button
-          className="btn btn-sm m-2"
+          className="btn btn-sm m-4 btn-primary"
           onClick={() =>
             this.setState({
               table: <Routes />

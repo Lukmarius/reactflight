@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import ModalButton from "./ModalButton";
 import ModalTableClass from "./Modal";
 import Size from "./size";
+import Pagination from "./Pagination";
 
 class Routes extends Component {
   constructor(props) {
@@ -9,8 +10,8 @@ class Routes extends Component {
     this.state = {
       isLoaded: false,
       data: {},
-      page: 0,
-      size: 20,
+
+      size: "&size=20",
       modal: false,
       uriModal: ""
     };
@@ -20,13 +21,14 @@ class Routes extends Component {
     this.hideModal = this.hideModal.bind(this);
   }
 
-  setPage(newPage) {
-    this.setState({ isLoaded: false, page: newPage });
+  setPage(link) {
+    this.setState({ isLoaded: false });
+    this.fetching(link);
   }
 
   setSize(newSize) {
     console.log("new size " + newSize);
-    this.setState({ isLoaded: false, size: newSize });
+    this.setState({ isLoaded: false, size: "&size=" + newSize });
   }
 
   showModal(name) {
@@ -52,7 +54,7 @@ class Routes extends Component {
       prevState.page !== this.state.page ||
       prevState.size !== this.state.size
     ) {
-      console.log("fetching in update routes");
+      console.log("fetching in ComponentDidUpdate routes");
       this.fetching();
     }
     console.log("UPDATED TABLE ROUTES");
@@ -75,12 +77,10 @@ class Routes extends Component {
     }
   }
 
-  fetching = () => {
-    fetch(
-      `http://localhost:8080/api/routes?page=${this.state.page}&size=${
-        this.state.size
-      }`
-    )
+  fetching = (
+    uri = "http://localhost:8080/api/routes?page=0" + this.state.size
+  ) => {
+    fetch(uri)
       .then(response => response.json())
       .then(
         result => {
@@ -108,11 +108,15 @@ class Routes extends Component {
       let routes = this.state.data._embedded.routes;
 
       console.log("Rendering routes: ......");
-      console.log("Modal show: " + this.state.modal);
       return (
         <React.Fragment>
-          <Size setSize={this.setSize} setPage={this.setPage} />
           {this.renderModal()}
+          <Pagination
+            setPage={this.setPage}
+            page={this.state.data.page}
+            links={this.state.data._links}
+          />
+          <Size setSize={this.setSize} page={this.state.data.page} />
           <table className="table table-sm">
             <thead>
               <tr>

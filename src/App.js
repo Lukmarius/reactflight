@@ -7,25 +7,12 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      table: <span>Choose table</span>,
-      page: 0,
-      size: 20
+      table: <span>Choose table</span>
     };
   }
 
-  // showTable(comp) {
-  //   this.setState({ table: comp });
-  // }
-
-  setPage(newPage) {
-    this.setState({ page: newPage });
-  }
-
-  setSize(newSize) {
-    this.setState({ size: newSize });
-  }
-
   render() {
+    console.log("rendering App");
     return (
       <div className="tablediv">
         <div id="mod" />
@@ -33,9 +20,7 @@ class App extends Component {
           className="btn btn-sm m-2"
           onClick={() =>
             this.setState({
-              table: (
-                <Passengers page={this.state.page} size={this.state.size} />
-              )
+              table: <Passengers />
             })
           }
         >
@@ -45,13 +30,13 @@ class App extends Component {
           className="btn btn-sm m-2"
           onClick={() =>
             this.setState({
-              table: <Routes page={this.state.page} size={this.state.size} />
+              table: <Routes />
             })
           }
         >
           Show Routes
         </button>
-        <div id="tables">{this.state.table}</div>
+        <div id="tables"> {this.state.table} </div>
       </div>
     );
   }

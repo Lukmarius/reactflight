@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import ModalButton from "./ModalButton";
 import ModalTableClass from "./Modal";
+import Size from "./size";
 
 class Routes extends Component {
   constructor(props) {
@@ -8,18 +9,36 @@ class Routes extends Component {
     this.state = {
       isLoaded: false,
       data: {},
-      page: this.props.page,
-      size: this.props.size,
+      page: 0,
+      size: 20,
       modal: false,
       uriModal: ""
     };
     this.showModal = this.showModal.bind(this);
+    this.setSize = this.setSize.bind(this);
+    this.setPage = this.setPage.bind(this);
+    this.hideModal = this.hideModal.bind(this);
+  }
+
+  setPage(newPage) {
+    this.setState({ page: newPage });
+  }
+
+  setSize(newSize) {
+    console.log("new size " + newSize);
+    this.setState({ isLoaded: false, size: newSize });
   }
 
   showModal(name) {
     this.setState({
       modal: true,
       uriModal: "http://0.0.0.0:8080/2api/airports/" + name
+    });
+  }
+
+  hideModal() {
+    this.setState({
+      modal: false
     });
   }
 
@@ -49,20 +68,44 @@ class Routes extends Component {
   }
 
   componentDidUpdate() {
-    //change size page
+    //change size / page
+    console.log("UPDATED TABLE ROUTES");
+    console.log("....................");
+  }
+
+  componentWillUpdate() {
+    console.log("WILL UPDATE ROUTES");
+  }
+
+  renderModal() {
+    if (this.state.modal) {
+      console.log("rendering modal");
+      return (
+        <ModalTableClass
+          hideModal={this.hideModal}
+          show={this.state.modal}
+          uri={this.state.uriModal}
+        />
+      );
+    } else {
+      console.log("not showing modal");
+      return null;
+    }
   }
 
   render() {
     if (!this.state.isLoaded) {
+      console.log("Loading Routes");
       return <div>Loading...</div>;
     } else {
       let routes = this.state.data._embedded.routes;
 
-      console.log("------------------------- In routes:");
-      console.log(this.state.modal);
+      console.log("Rendering routes: ......");
+      console.log("Modal show: " + this.state.modal);
       return (
         <React.Fragment>
-          <ModalTableClass show={this.state.modal} uri={this.state.uriModal} />
+          <Size setSize={this.setSize} setPage={this.setPage} />
+          {this.renderModal()}
           <table className="table table-sm">
             <thead>
               <tr>

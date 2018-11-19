@@ -7,26 +7,66 @@ export default class Pagination extends Component {
     console.log("Pagination Constructor");
   }
 
-  render() {
+  preparePageButtons = () => {
     const { page, links } = this.props;
+
+    switch (page.number) {
+      case 0:
+        return (
+          <React.Fragment>
+            {this.prepareBtn(links.first.href, "First")}
+            {this.prepareBtn("", "Previous", true)}
+            {this.prepareInfoAboutPage(page.number, page.totalPages)}
+            {this.prepareBtn(links.next.href, "Next")}
+            {this.prepareBtn(links.last.href, "Last")}
+          </React.Fragment>
+        );
+
+      case page.totalPages - 1:
+        return (
+          <React.Fragment>
+            {this.prepareBtn(links.first.href, "First")}
+            {this.prepareBtn(links.prev.href, "Previous")}
+            {this.prepareInfoAboutPage(page.number, page.totalPages)}
+            {this.prepareBtn("", "Next", true)}
+            {this.prepareBtn(links.last.href, "Last")}
+          </React.Fragment>
+        );
+
+      default:
+        return (
+          <React.Fragment>
+            {this.prepareBtn(links.first.href, "First")}
+            {this.prepareBtn(links.prev.href, "Previous")}
+            {this.prepareInfoAboutPage(page.number, page.totalPages)}
+            {this.prepareBtn(links.next.href, "Next")}
+            {this.prepareBtn(links.last.href, "Last")}
+          </React.Fragment>
+        );
+    }
+  };
+
+  prepareBtn = (link, text, disabled = false) => {
     return (
-      <React.Fragment>
-        <button
-          onClick={() => this.props.setPage(links.prev.href)}
-          className="btn btn-sm m-2 btn-light"
-        >
-          Previous
-        </button>
-        <span>
-          | {page.number} / {page.totalPages} |
-        </span>
-        <button
-          onClick={() => this.props.setPage(links.next.href)}
-          className="btn btn-sm m-2 btn-light"
-        >
-          Next
-        </button>
-      </React.Fragment>
+      <button
+        onClick={() => this.props.setPage(link)}
+        className="btn btn-sm m-2 btn-light"
+        disabled={disabled}
+      >
+        {text}
+      </button>
     );
+  };
+
+  prepareInfoAboutPage(currentPage, totalPages) {
+    return (
+      <span>
+        | {currentPage + 1} / {totalPages} |
+      </span>
+    );
+  }
+
+  render() {
+    return this.preparePageButtons();
   }
 }

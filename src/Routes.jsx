@@ -81,11 +81,7 @@ class Routes extends Component {
     if (this.state.modal) {
       console.log("rendering modal");
       return (
-        <ModalTableClass
-          hideModal={this.hideModal}
-          show={this.state.modal}
-          uri={this.state.uriModal}
-        />
+        <ModalTableClass hideModal={this.hideModal} uri={this.state.uriModal} />
       );
     } else {
       console.log("not showing modal");

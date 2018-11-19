@@ -21,7 +21,7 @@ class Routes extends Component {
   }
 
   setPage(newPage) {
-    this.setState({ page: newPage });
+    this.setState({ isLoaded: false, page: newPage });
   }
 
   setSize(newSize) {
@@ -43,6 +43,39 @@ class Routes extends Component {
   }
 
   componentDidMount() {
+    this.fetching();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    //after changed size or page
+    if (
+      prevState.page !== this.state.page ||
+      prevState.size !== this.state.size
+    ) {
+      console.log("fetching in update routes");
+      this.fetching();
+    }
+    console.log("UPDATED TABLE ROUTES");
+    console.log("....................");
+  }
+
+  componentWillUpdate() {
+    console.log("WILL UPDATE ROUTES");
+  }
+
+  renderModal() {
+    if (this.state.modal) {
+      console.log("rendering modal");
+      return (
+        <ModalTableClass hideModal={this.hideModal} uri={this.state.uriModal} />
+      );
+    } else {
+      console.log("not showing modal");
+      return null;
+    }
+  }
+
+  fetching = () => {
     fetch(
       `http://localhost:8080/api/routes?page=${this.state.page}&size=${
         this.state.size
@@ -65,29 +98,7 @@ class Routes extends Component {
           });
         }
       );
-  }
-
-  componentDidUpdate() {
-    //change size / page
-    console.log("UPDATED TABLE ROUTES");
-    console.log("....................");
-  }
-
-  componentWillUpdate() {
-    console.log("WILL UPDATE ROUTES");
-  }
-
-  renderModal() {
-    if (this.state.modal) {
-      console.log("rendering modal");
-      return (
-        <ModalTableClass hideModal={this.hideModal} uri={this.state.uriModal} />
-      );
-    } else {
-      console.log("not showing modal");
-      return null;
-    }
-  }
+  };
 
   render() {
     if (!this.state.isLoaded) {

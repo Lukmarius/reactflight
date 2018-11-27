@@ -99,15 +99,23 @@ class Routes extends Component {
   render() {
     if (!this.state.isLoaded) {
       console.log("Loading Routes");
-      return <div>Loading...</div>;
+      return (
+        <Pagination
+          isLoaded={this.state.isLoaded}
+          setPage={this.setPage}
+          page={this.state.data.page}
+          links={this.state.data._links}
+        />
+      );
     } else {
-      let routes = this.state.data._embedded.routes;
+      let routes = this.state.data._embedded.resources;
 
       console.log("Rendering routes: ......");
       return (
         <React.Fragment>
           {this.renderModal()}
           <Pagination
+            isLoaded={this.state.isLoaded}
             setPage={this.setPage}
             page={this.state.data.page}
             links={this.state.data._links}

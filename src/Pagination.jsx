@@ -67,6 +67,18 @@ export default class Pagination extends Component {
   }
 
   render() {
-    return this.preparePageButtons();
+    if (this.props.isLoaded) {
+      return this.preparePageButtons();
+    } else {
+      return (
+        <React.Fragment>
+          {this.prepareBtn("", "First", true)}
+          {this.prepareBtn("", "Previous", true)}
+          <span>| ---- / ---- |</span>
+          {this.prepareBtn("", "Next", true)}
+          {this.prepareBtn("", "Last", true)}
+        </React.Fragment>
+      );
+    }
   }
 }

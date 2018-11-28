@@ -3,6 +3,8 @@ import ModalButton from "./ModalButton";
 import ModalTableClass from "./Modal";
 import Size from "./size";
 import Pagination from "./Pagination";
+import AwesomeComponent from "./Spinner";
+import "./routes.css";
 
 class Routes extends Component {
   constructor(props) {
@@ -100,12 +102,18 @@ class Routes extends Component {
     if (!this.state.isLoaded) {
       console.log("Loading Routes");
       return (
-        <Pagination
-          isLoaded={this.state.isLoaded}
-          setPage={this.setPage}
-          page={this.state.data.page}
-          links={this.state.data._links}
-        />
+        <React.Fragment>
+          <Pagination
+            isLoaded={this.state.isLoaded}
+            setPage={this.setPage}
+            page={this.state.data.page}
+            links={this.state.data._links}
+          />
+          <Size isLoaded={this.state.isLoaded} />
+          <div className="middle">
+            <AwesomeComponent />
+          </div>
+        </React.Fragment>
       );
     } else {
       let routes = this.state.data._embedded.resources;
@@ -120,7 +128,11 @@ class Routes extends Component {
             page={this.state.data.page}
             links={this.state.data._links}
           />
-          <Size setSize={this.setSize} page={this.state.data.page} />
+          <Size
+            setSize={this.setSize}
+            page={this.state.data.page}
+            isLoaded={this.state.isLoaded}
+          />
           <table className="table table-sm">
             <thead>
               <tr>

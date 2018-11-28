@@ -71,8 +71,13 @@ class Passengers extends Component {
             setPage={this.setPage}
             page={this.state.data.page}
             links={this.state.data._links}
+            isLoaded={this.state.isLoaded}
           />
-          <Size setSize={this.setSize} page={this.state.data.page} />
+          <Size
+            setSize={this.setSize}
+            page={this.state.data.page}
+            isLoaded={this.state.isLoaded}
+          />
           <table className="table table-sm">
             <thead>
               <tr>

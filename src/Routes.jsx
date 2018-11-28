@@ -36,7 +36,7 @@ class Routes extends Component {
   showModal(name) {
     this.setState({
       modal: true,
-      uriModal: "http://0.0.0.0:8080/2api/airports/" + name
+      uriModal: "http://0.0.0.0:8080/api/airports/" + name
     });
   }
 
